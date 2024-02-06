@@ -34,6 +34,15 @@ module.exports = {
         "plugin:react-hooks/recommended",
         "plugin:jsx-a11y/recommended",
       ],
+      rules: {
+        "no-unused-vars": "off",
+        "prefer-const": "off",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-extra-semi": "off",
+        "@typescript-eslint/consistent-type-imports": "off",
+        "@typescript-eslint/": "off",
+        "@typescript-eslint/prefer-const": "off",
+      },
       settings: {
         react: {
           version: "detect",
