@@ -24,11 +24,22 @@ const createTemplate = async(templateData: DocumentData) => {
   return newTemplate.id;
 }
 
+const updateTemplate = async(id: string, templateData: DocumentData) => {
+  const writeUpdate = await templateCollection().doc(id).set(templateData, { merge: true });
+
+  return writeUpdate;
+};
+
+const deleteTemplate = async(id: string) => {
+  const deleteDoc = await templateCollection().doc(id).delete();
+  return deleteDoc;
+}
 
 
-const templates= {
+
+export const templates= {
   readById: readById,
   createTemplate: createTemplate,
-  updateTemplate:()=>{},
-  deleteTemplate:()=>{},
+  updateTemplate: updateTemplate,
+  deleteTemplate: deleteTemplate,
 }
