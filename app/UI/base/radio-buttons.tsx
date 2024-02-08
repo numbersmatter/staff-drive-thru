@@ -29,7 +29,6 @@ export function SingleStringRadioGroup({
 
   const optionIds = options.map((option) => option.id)
 
-  console.log(optionIds);
 
   return (
     <RadioGroup value={selectedId} onChange={setSelected}>

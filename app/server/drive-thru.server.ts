@@ -1,7 +1,7 @@
 import { redirect } from "@remix-run/node";
 import { CisFormData } from "./interfaces";
 import { driveThruForms } from "./database/driveThru.server";
-import { DocumentData } from "firebase-admin/firestore";
+import { DocumentData, FieldValue, Timestamp } from "firebase-admin/firestore";
 
 export const checkAnswer = () => {};
 
@@ -166,6 +166,22 @@ export const handleSaveInputNumber = async (
 
   const writeUpdate = await updateForm(formId, updateData);
 
+
+  return writeUpdate;
+}
+
+interface StaffComments {
+  comments: string;
+  receivedBox: string;
+}
+
+export const saveStaffComments = async (staffComments: StaffComments, formId: string) => {
+  const updateData = {
+    staffComments,
+    recordedAt: FieldValue.serverTimestamp(),
+  };
+
+  const writeUpdate = await updateForm(formId, updateData);
 
   return writeUpdate;
 }

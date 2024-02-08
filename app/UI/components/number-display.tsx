@@ -7,7 +7,6 @@ export function NumberDisplay( props: {questionId: string, count: number, increm
 
   return (
     <div className="mx-auto w-3/5 flex flex-row  justify-around items-center ">
-      <span className="text-sm">{props.questionId}</span>
       <div className="px-2">
       <ButtonIcon
         type="button"

@@ -5,7 +5,7 @@ import { Form } from "@remix-run/react";
 
 export function FormNav({children}: {children: React.ReactNode}) {
   return (
-    <Form method="post" className=" w-full flex flex-row justify-between px-6 py-4">
+    <Form reloadDocument method="post" className=" w-full flex flex-row justify-between px-6 py-4">
       {children}
 
       <ButtonIcon
