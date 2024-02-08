@@ -12,7 +12,7 @@ export const dataPoint = <T extends FirebaseFirestore.DocumentData>(
   collectionPath: string
 ) => getFirestore().collection(collectionPath).withConverter(converter<T>());
 
-export const mainDb = "driveThru";
+export const mainDb = "test/driveThru";
 
 export const randomId = () => {
   return Math.random().toString(36).substring(2, 15);

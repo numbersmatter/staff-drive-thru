@@ -1,3 +1,5 @@
+import { Link } from "@remix-run/react";
+
 export default function Header() {
   return (
     <header className="bg-white shadow">
@@ -6,7 +8,7 @@ export default function Header() {
           <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
             Staff App
           </h1>
-          <button>Logout</button>
+          <Link to="/logout">Logout</Link>
         </div>
       </div>
     </header>

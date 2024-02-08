@@ -87,6 +87,7 @@ type ActionData = {
 
 export default function LoginPage() {
   const [clientAction, setClientAction] = useState<ActionData>()
+  const actionData = useActionData<ActionData>();
   const restConfig = useLoaderData<typeof loader>();
   const submit = useSubmit();
 
@@ -113,10 +114,10 @@ export default function LoginPage() {
 
 
   return (
-    <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <form method="post" onSubmit={handleSubmit} className="mx-auto max-w-7xl sm:px-6 lg:px-8">
      <LoginForm />
 
-    </div>
+    </form>
   )
 
 }

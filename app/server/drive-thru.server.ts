@@ -1,5 +1,6 @@
 import { redirect } from "@remix-run/node";
 import { CisFormData } from "./interfaces";
+import { driveThruForms } from "./database/driveThru.server";
 
 export const checkAnswer = () => {};
 
@@ -44,7 +45,7 @@ const testFormData: CisFormData ={
         "Tengo ___ niños asistiendo a la escuela secundaria? (9-12 grado)",
     },
   ],
-  language:"spanish",
+  language:"english",
   responses: {
     "1": 0,
     "2": 0,
@@ -56,9 +57,19 @@ const testFormData: CisFormData ={
 };
 
 
+// Drive-thru Forms
+
+export const createNewDriveThruForm = async () => {
+
+  const {formId, ...formTemplate} = testFormData;
+  const driveThruFormId = await driveThruForms.createForm(formTemplate);
+
+  return {id: driveThruFormId};
+};
+
 
 export const readFormData = async (formId: string) => {
-  const cisFormData: CisFormData = testFormData;
+  const cisFormData = await driveThruForms.readById(formId);
 
   return cisFormData;
 };

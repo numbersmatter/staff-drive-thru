@@ -36,7 +36,7 @@ export default function LoginForm() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <div className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-white">
                 Email address
@@ -84,7 +84,7 @@ export default function LoginForm() {
                 Sign in
               </button>
             </div>
-          </form>
+          </div>
 
           <p className="mt-10 text-center text-sm text-gray-400">
             Not a member?{' '}

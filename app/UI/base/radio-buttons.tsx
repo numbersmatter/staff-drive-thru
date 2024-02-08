@@ -29,17 +29,19 @@ export function SingleStringRadioGroup({
 
   const optionIds = options.map((option) => option.id)
 
+  console.log(optionIds);
+
   return (
     <RadioGroup value={selectedId} onChange={setSelected}>
-      <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+      <RadioGroup.Label className="sr-only">Choose Language</RadioGroup.Label>
       <div className="space-y-4">
         {optionIds.map((optionId) => (
           <RadioGroup.Option
             key={optionId}
             value={optionId}
-            className={() =>
+            className={(active) =>
               classNames(
-                selectedId === optionId ? 'border-indigo-600 ring-2 ring-indigo-600 bg-green-400' : 'border-gray-300',
+                selectedId == optionId  ? 'border-indigo-600 ring-2 ring-indigo-600 bg-green-500' : 'border-gray-300',
                 'relative block cursor-pointer rounded-lg border bg-white px-6 py-4 shadow-sm focus:outline-none sm:flex sm:justify-center'
               )
             }

@@ -1,10 +1,11 @@
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
-import { useLoaderData, isRouteErrorResponse, useRouteError, redirect } from "@remix-run/react";
+import { useLoaderData, isRouteErrorResponse, useRouteError, redirect, json } from "@remix-run/react";
 import { useState } from "react";
 import { SingleStringRadioGroup } from "~/UI/base/radio-buttons";
 import { FormHeader } from "~/UI/components/form-header";
 import { FormNav } from "~/UI/components/form-nav";
 import { QuestionDisplay } from "~/UI/components/question-display";
+import { requireAuth } from "~/server/auth/auth.server";
 import { getQuestionData, readFormData } from "~/server/drive-thru.server";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
@@ -19,28 +20,41 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
   const cisFormData = await readFormData(formId);
 
+  if(!cisFormData){
+    throw new Error("Form not found");
+  }
+
   const selectedLanguage = cisFormData.language;
 
-  return {
-    questionText,
-    options,
-    selectedId: selectedLanguage,
-  };
+  return json(
+    {
+      questionText,
+      options,
+      selectedId: selectedLanguage,
+    }
+  ) 
 };
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
-
+  await requireAuth(request)
   const formId = params.formId ?? "none";
 
+  const formData = await request.clone().formData();
+
+  const language = formData.get("language") as string;
+
+  const valid = ["english", "spanish"].includes(language);
 
 
-  return redirect(`/form/${formId}/1`);
+  return json({result: "nothing happened.", formData, formId, valid});
 };
 
 export default function RouteComponent(){
   const data = useLoaderData<typeof loader>()
-  const [selectedId, setSelected] = useState<string | null>(data.selectedId);
+  console.log(data);
+  const [selectedId, setSelected] = useState<string | null>("english");
 
+  console.log(selectedId)
   return (
     <>
       <main className=" mx-auto flex-1 flex flex-col justify-between max-w-lg pt-2">
