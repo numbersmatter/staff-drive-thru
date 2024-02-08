@@ -10,6 +10,10 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
   const cisFormData = await readFormData(formId);
 
+  if(cisFormData === undefined){
+    throw new Error("Form not found");
+  }
+
   const language = cisFormData.language;
 
   const englishOptions = [

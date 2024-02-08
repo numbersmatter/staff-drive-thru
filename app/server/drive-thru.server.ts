@@ -1,7 +1,8 @@
 import { redirect } from "@remix-run/node";
-import { CisFormData } from "./interfaces";
+import { CisFormData, CisFormDataNoId } from "./interfaces";
 import { driveThruForms } from "./database/driveThru.server";
 import { DocumentData, FieldValue, Timestamp } from "firebase-admin/firestore";
+import { templates } from "./database/templates.server";
 
 export const checkAnswer = () => {};
 
@@ -61,9 +62,15 @@ const testFormData: CisFormData ={
 // Drive-thru Forms
 
 export const createNewDriveThruForm = async () => {
+  // get template data
+  const templateData = await templates.readById("7Pxajo6XgPezkaSwxpTA");
 
-  const {formId, ...formTemplate} = testFormData;
-  const driveThruFormId = await driveThruForms.createForm(formTemplate);
+  if(!templateData){
+    throw new Error("Template not found");
+  }
+
+
+  const driveThruFormId = await driveThruForms.createForm( templateData as CisFormDataNoId);
 
   return {id: driveThruFormId};
 };
