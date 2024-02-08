@@ -1,4 +1,4 @@
-import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
+import { isRouteErrorResponse, useLoaderData, useRouteError } from "@remix-run/react";
 import type { ActionFunctionArgs } from "@remix-run/node";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import type { MetaFunction } from "@remix-run/node";
@@ -32,22 +32,28 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await requireAuth(request);
+  const user =await requireAuth(request);
+  console.log(user);
 
-  return json({});
+  return json({user});
 };
 
 export default function Index() {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <>
       <Header />
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="mt-6 mx-auto w-32 bg-slate-500 flex flex-col justify-center">
-          <Form method="post">
-            <button name="intent" value="createNewDriveThruForm" className="bg-white max-w-52 text-slate-500 font-bold py-2 px-4 rounded">
+          <div>
+            <h4 className="text-white text-center">Welcome, {data.user?.uid}</h4>
+          </div>
+          <div >
+            <Link to="/start-form"  className="bg-white max-w-52 text-slate-500 font-bold py-2 px-4 rounded">
               Start Drive Thru
-            </button>
-          </Form>
+            </Link>
+          </div>
         </div>
       </div>
     </>

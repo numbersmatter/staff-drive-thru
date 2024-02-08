@@ -4,8 +4,7 @@ import {
   cert as serverCert,
   
 } from "firebase-admin/app";
-import pkg from 'firebase-admin';
-const { firestore } = pkg;
+// import { firestore } from "firebase-admin";
 import { getAuth as getServerAuth,  } from "firebase-admin/auth";
 
 import * as firebaseRest from "./firebase-rest";
@@ -85,4 +84,4 @@ export const auth = {
 };
 
 
-export const db = firestore()
+

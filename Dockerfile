@@ -49,9 +49,9 @@ ADD . .
 
 
 # drop the posts for the gcloud build
-# ENV PORT=4001
+ENV PORT=4001
 
-# EXPOSE 4001
+EXPOSE 4001
 
 
 CMD ["npm", "run", "start"]
