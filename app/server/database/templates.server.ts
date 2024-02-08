@@ -3,14 +3,14 @@ import { dataPoint, mainDb } from "~/server/database/mainDb.server";
 
 
 const templateCollection = () => 
-dataPoint<DocumentData>(`${mainDb}/templates`);
+dataPoint<DocumentData>(`templates`);
 
 const readById = async(id: string) => {
   const templateDoc = await templateCollection().doc(id).get();
 
-  if (!templateDoc.exists) {
-    return null;
-  }
+  // if (templateDoc.data() === undefined){
+  //   return undefined;
+  // }
 
   return templateDoc.data();
 }

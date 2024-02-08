@@ -1,3 +1,4 @@
+import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
 import type { ActionFunctionArgs } from "@remix-run/node";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import type { MetaFunction } from "@remix-run/node";
@@ -52,3 +53,14 @@ export default function Index() {
     </>
   );
 }
+
+export function ErrorBoundary(){
+  const error = useRouteError();
+  if (isRouteErrorResponse(error)) {
+    return <div>{error.data}</div>
+  }
+  return <div>
+    <h1>Something went wrong</h1>
+  </div>
+}
+

@@ -5,7 +5,7 @@ import { CisFormDataNoId } from "../interfaces";
 
 
 const driveThruFormCollection = () =>
-  dataPoint<CisFormDataNoId>(`${mainDb}/driveThruForms`);
+  dataPoint<CisFormDataNoId>(`driveThruForms`);
 
 
 

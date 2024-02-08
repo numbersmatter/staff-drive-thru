@@ -61,13 +61,16 @@ const testFormData: CisFormData ={
 
 // Drive-thru Forms
 
+const formtemplateId = process.env.TEMPLATE_ID ?? "test";
+
 export const createNewDriveThruForm = async () => {
   // get template data
-  const templateData = await templates.readById("7Pxajo6XgPezkaSwxpTA");
-
+  
+  const templateData = await templates.readById(formtemplateId);
   if(!templateData){
     throw new Error("Template not found");
   }
+
 
 
   const driveThruFormId = await driveThruForms.createForm( templateData as CisFormDataNoId);

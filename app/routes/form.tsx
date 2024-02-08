@@ -18,6 +18,9 @@ export function ErrorBoundary(){
     <h1 className="text-4xl text-red-500">Route Error</h1>
     <p>Please try again later</p>
     <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-2xl" to="/">Go Home</Link>
+    <div className="text-red-500">
+      <pre>{error.data}</pre>
+    </div>
   </div>
   }
   return <div>
