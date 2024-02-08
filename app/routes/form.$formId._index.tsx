@@ -6,7 +6,7 @@ import { FormHeader } from "~/UI/components/form-header";
 import { FormNav } from "~/UI/components/form-nav";
 import { QuestionDisplay } from "~/UI/components/question-display";
 import { requireAuth } from "~/server/auth/auth.server";
-import { getQuestionData, readFormData } from "~/server/drive-thru.server";
+import { getQuestionData, readFormData, updateForm } from "~/server/drive-thru.server";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
@@ -45,6 +45,16 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 
   const valid = ["english", "spanish"].includes(language);
 
+  if(valid){
+    const updatedFormData = {
+      language,
+    };
+
+    await updateForm(formId, updatedFormData);
+
+    return redirect(`/form/${formId}/1`);
+  }
+
 
   return json({result: "nothing happened.", formData, formId, valid});
 };
@@ -52,7 +62,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 export default function RouteComponent(){
   const data = useLoaderData<typeof loader>()
   console.log(data);
-  const [selectedId, setSelected] = useState<string | null>("english");
+  const [selectedId, setSelected] = useState<string | null>(data.selectedId);
 
   console.log(selectedId)
   return (

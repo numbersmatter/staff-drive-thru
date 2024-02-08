@@ -1,20 +1,28 @@
 import type { DocumentData } from "firebase-admin/firestore";
 import { dataPoint, mainDb } from "~/server/database/mainDb.server";
+import { CisFormDataNoId } from "../interfaces";
 
 
 
 const driveThruFormCollection = () =>
-  dataPoint<DocumentData>(`${mainDb}/driveThruForms`);
+  dataPoint<CisFormDataNoId>(`${mainDb}/driveThruForms`);
 
 
 
 const readById = async (id: string) => {
   const formDoc = await driveThruFormCollection().doc(id).get();
+  const formDocData = formDoc.data();
 
-  return formDoc.data();
+  if(formDocData === undefined){
+    return undefined;
+  }
+
+  const formDocDataExists = formDocData as CisFormDataNoId
+
+  return {...formDocDataExists, formId: formDoc.id};
 };
 
-const createForm = async (formData: DocumentData) => {
+const createForm = async (formData: CisFormDataNoId) => {
   const newForm = driveThruFormCollection().doc();
   await newForm.set(formData);
 

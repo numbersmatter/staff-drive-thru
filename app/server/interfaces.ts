@@ -4,12 +4,16 @@ export interface FormQuestion {
   spanishText: string;
 }
 
-export interface CisFormData {
+
+export interface CisFormDataNoId {
   formTitle: string;
-  formId: string;
   questions: FormQuestion[];
   language: string;
   responses: {
     [key: string]: number;
   };
+}
+
+export interface CisFormData extends CisFormDataNoId {
+  formId: string;
 }

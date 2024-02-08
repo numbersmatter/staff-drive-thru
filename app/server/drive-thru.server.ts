@@ -1,6 +1,7 @@
 import { redirect } from "@remix-run/node";
 import { CisFormData } from "./interfaces";
 import { driveThruForms } from "./database/driveThru.server";
+import { DocumentData } from "firebase-admin/firestore";
 
 export const checkAnswer = () => {};
 
@@ -71,15 +72,25 @@ export const createNewDriveThruForm = async () => {
 export const readFormData = async (formId: string) => {
   const cisFormData = await driveThruForms.readById(formId);
 
+  if(!cisFormData){
+    return undefined;
+  }
+
   return cisFormData;
 };
 
-export const getQuestionData = async (formId:string, questionId: string) => {
+export const updateForm = async (formId: string, formData: DocumentData) => {
 
-  const formData = await readFormData(formId);
+  const updatedForm = await driveThruForms.updateForm(formId, formData);
 
-  const language = formData.language;
-  const questionData = formData.questions.find((question) => question.id === questionId)
+  return updatedForm;
+};
+export const getQuestionData = async (cisFormData: CisFormData, questionId: string) => {
+
+
+
+  const language = cisFormData.language;
+  const questionData = cisFormData.questions.find((question) => question.id === questionId)
 
   if (!questionData) {
     throw new Error("Question not found");
@@ -90,7 +101,7 @@ export const getQuestionData = async (formId:string, questionId: string) => {
 
   return {
     questionText,
-    questionResponse: formData.responses[questionId],
+    questionResponse: cisFormData.responses[questionId],
   };
 };
 
@@ -135,16 +146,26 @@ export const handleNextRequest = (
     return redirect(`/form/${cisFormData.formId}/placement`);
   }
 
-  return redirect(`/form/${cisFormData.formId}/${currentQuestionOrder.next}`);
+  return redirect(
+    `/form/${cisFormData.formId}/${currentQuestionOrder.next}`,
+    302
+  );
 };
 
 
 export const handleSaveInputNumber = async (
-  formId: string, questionId: string, value: number
+  cisFormData: CisFormData,  questionId: string, value: number
 ) => {
+  const formId = cisFormData.formId;
+  const updateResponse = cisFormData.responses;
+  updateResponse[questionId] = value;
 
-  const formData = await readFormData(formId);
+  const updateData = {
+    responses: updateResponse,
+  };
+
+  const writeUpdate = await updateForm(formId, updateData);
 
 
-  return ( "success")
+  return writeUpdate;
 }
