@@ -1,12 +1,11 @@
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
-import { useLoaderData, isRouteErrorResponse, useRouteError, redirect, json } from "@remix-run/react";
+import { useLoaderData, isRouteErrorResponse, useRouteError, redirect, json, Form } from "@remix-run/react";
 import { useState } from "react";
-import { SingleStringRadioGroup } from "~/UI/base/radio-buttons";
-import { FormHeader } from "~/UI/components/form-header";
-import { FormNav } from "~/UI/components/form-nav";
+import {  SingleStringRadioGroupUncontrolled } from "~/UI/base/radio-buttons";
+import {  NavButtons } from "~/UI/components/form-nav";
 import { QuestionDisplay } from "~/UI/components/question-display";
 import { requireAuth } from "~/server/auth/auth.server";
-import { getQuestionData, readFormData, updateForm } from "~/server/drive-thru.server";
+import {  readFormData, updateForm } from "~/server/drive-thru.server";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
@@ -62,23 +61,19 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 export default function RouteComponent(){
   const data = useLoaderData<typeof loader>()
   console.log(data);
-  const [selectedId, setSelected] = useState<string | null>(data.selectedId);
-
-  console.log(selectedId)
+  
   return (
     <>
-      <main className=" mx-auto flex-1 flex flex-col justify-between max-w-lg pt-2">
+      <Form method="post" className=" mx-auto flex-1 flex flex-col justify-between max-w-lg pt-2">
         <QuestionDisplay  questionText={data.questionText}/>
-        <SingleStringRadioGroup 
-          selectedId={selectedId}
-          setSelected={setSelected}
+        <SingleStringRadioGroupUncontrolled 
           options={data.options}
+          defaultValue={data.selectedId}
+          name="language"
         />
 
-      <FormNav >
-        <input hidden  readOnly name="language" value={selectedId || ""} />
-      </FormNav>
-      </main>
+        <NavButtons />
+      </Form>
     </>
   );
 }

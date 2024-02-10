@@ -13,10 +13,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return redirect(`/form/${id}`);
   }
 
-  // const { id } = await createNewDriveThruForm();
-
-  // return redirect(`/form/${id}`);
-
   return json({ result: "nothing happened." });
 };
 

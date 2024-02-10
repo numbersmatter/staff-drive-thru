@@ -1,3 +1,4 @@
+import { MetaFunction } from "@remix-run/react";
 // import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction } from "@remix-run/node";
 import {
@@ -11,8 +12,18 @@ import {
 
 import styles from "./tailwind.css";
 
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: styles },
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
+
+export const meta: MetaFunction = () => [
+  { title: "CIS T | Drive-thru app" },
+  {
+    property: "og:title",
+    content: "Drive-thru App",
+  },
+  {
+    name: "description",
+    content: "An app for collecting drive-thru data.",
+  },
 ];
 
 export default function App() {

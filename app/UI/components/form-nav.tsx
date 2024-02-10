@@ -25,3 +25,27 @@ export function FormNav({children}: {children: React.ReactNode}) {
     </Form>
   );
 }
+
+
+export function NavButtons(){
+
+  return (
+    <div className=" w-full flex flex-row justify-between px-6 py-4">
+    <ButtonIcon
+      className="px-8 py-3"
+      name="intent"
+      value="back"
+    >
+      <ChevronLeftIcon className="w-10"/>
+    </ButtonIcon>
+    <ButtonIcon
+      className="px-8 py-3"
+      name="intent"
+      value="submit"
+    > 
+      <ChevronRightIcon className="w-10"/>
+    </ButtonIcon>
+  </div>
+
+  )
+}
