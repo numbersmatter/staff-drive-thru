@@ -2,14 +2,17 @@ import {
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
+  Link,
+  json,
 } from "@remix-run/react";
-import type { ActionFunctionArgs } from "@remix-run/node";
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import type { MetaFunction } from "@remix-run/node";
+import type { 
+  ActionFunctionArgs, 
+  LoaderFunctionArgs,
+  MetaFunction
+} from "@remix-run/node";
 import Header from "~/UI/shell/header";
 import { requireAuth } from "~/server/auth/auth.server";
-import { Form, Link, json, redirect } from "@remix-run/react";
-import { createNewDriveThruForm } from "~/server/drive-thru.server";
+
 
 export const meta: MetaFunction = () => {
   return [
@@ -20,17 +23,6 @@ export const meta: MetaFunction = () => {
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   await requireAuth(request);
-  // const formData = await request.clone().formData();
-  // const intent = formData.get("intent");
-
-  // if (intent === "createNewDriveThruForm") {
-  //   const { id } = await createNewDriveThruForm();
-  //   return redirect(`/form/${id}`);
-  // }
-
-  // const { id } = await createNewDriveThruForm();
-
-  // return redirect(`/form/${id}`);
 
   return json({ result: "nothing happened." });
 };

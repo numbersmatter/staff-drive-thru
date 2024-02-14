@@ -1,4 +1,4 @@
-import type { DocumentData } from "firebase-admin/firestore";
+import { FieldValue, type DocumentData } from "firebase-admin/firestore";
 import { dataPoint, mainDb } from "~/server/database/mainDb.server";
 import { CisFormDataNoId } from "../interfaces";
 
@@ -24,7 +24,12 @@ const readById = async (id: string) => {
 
 const createForm = async (formData: CisFormDataNoId) => {
   const newForm = driveThruFormCollection().doc();
-  await newForm.set(formData);
+
+  const newFormData ={
+    ...formData,
+    createdAt: FieldValue.serverTimestamp(),
+  }
+  await newForm.set(newFormData);
 
   return newForm.id;
 };

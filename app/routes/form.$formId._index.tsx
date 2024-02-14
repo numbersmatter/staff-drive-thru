@@ -39,7 +39,6 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   const formId = params.formId ?? "none";
 
   const formData = await request.clone().formData();
-
   const language = formData.get("language") as string;
 
   const valid = ["english", "spanish"].includes(language);
@@ -53,7 +52,6 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 
     return redirect(`/form/${formId}/1`);
   }
-
 
   return json({result: "nothing happened.", formData, formId, valid});
 };
